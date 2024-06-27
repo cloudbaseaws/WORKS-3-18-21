@@ -1,0 +1,24 @@
+FROM centos:latest
+RUN  file="$(  mkdir  /tmp/dock-download &&  ls -la   /tmp/dock-download )"  ;  echo $file ; sleep 5
+# FROM BARE-METAL TO CONTAINER
+
+
+####
+COPY   *                     /tmp/dock-download
+
+
+RUN  file="$( du -a   /tmp/dock-download | grep rpm )"   ;  echo  $file  ;  sleep 5 && \
+ dnf  install -v -y  --disablerepo=*   /tmp/dock-download/*.rpm  && \
+
+
+
+ dnf list installed   &&  yum -y update   &&   yum -y install python3  && \
+ file="$(  du -a   /tmp/dock-download | grep whl && pip3 list installed |wc -l )"  ;  echo $file ; sleep 5 && \
+ file="$( pip3  install  /tmp/dock-download/*.whl  &&  pip3 list installed)" ;  echo $file  ;  echo 'Done'  ;  sleep 2
+
+
+
+
+
+
+
